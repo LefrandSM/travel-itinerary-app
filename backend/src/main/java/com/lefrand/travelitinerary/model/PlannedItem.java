@@ -7,12 +7,12 @@ public class PlannedItem {
     private String type;
     private String description;
     private String locationText;
-    private String locationMapUrl; // optional
+    private String locationMapUrl; // nullable
     private Integer cost; // nullable
 
     private LocalDateTime dateTimeStart; // required!
 
-    private LocalDateTime dateTimeEnd; // optional
+    private LocalDateTime dateTimeEnd; // nullable
 
     private int tripId;
 

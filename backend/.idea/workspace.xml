@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f3946861-0aa4-44bc-b76c-bb847c9252f8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/model/PlannedItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/model/PlannedItem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +57,10 @@
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/lefra/Documents/coding/project/travel-itinerary-app/backend",
-    "onboarding.tips.debug.path": "C:/Users/lefra/Documents/coding/project/travel-itinerary-app/backend/src/main/java/com/itinerary/Main.java"
+    "onboarding.tips.debug.path": "C:/Users/lefra/Documents/coding/project/travel-itinerary-app/backend/src/main/java/com/itinerary/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
   <component name="SharedIndexes">
@@ -80,7 +85,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/Main.java</url>
-          <line>7</line>
+          <line>11</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
