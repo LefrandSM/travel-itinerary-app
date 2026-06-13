@@ -6,7 +6,6 @@ A full-stack planning application where users can create trips and organize dest
 
 ## Features
 
-- Choose country
 - Create trips
 - Add planed items with the following category (activities, meals, accommodation)
 - Time-based itinerary sorting
