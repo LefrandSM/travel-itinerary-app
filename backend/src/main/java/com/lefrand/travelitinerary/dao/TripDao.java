@@ -5,7 +5,10 @@ import com.lefrand.travelitinerary.model.Trip;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TripDao {
     public void createTrip(Trip trip) {
@@ -26,5 +29,31 @@ public class TripDao {
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    public List<Trip> readAllTrips() {
+        List<Trip> trips = new ArrayList<>();
+
+        String sql = "SELECT * FROM trip";
+
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()) {
+            while(rs.next()) {
+                Trip trip = new Trip();
+
+                trip.setId(rs.getInt("id"));
+                trip.setName(rs.getString("name"));
+                trip.setCity(rs.getString("city"));
+                trip.setDateStart(rs.getDate("date_start"));
+                trip.setDateEnd(rs.getDate("date_end"));
+                trip.setUserId(rs.getInt("user_id"));
+
+                trips.add(trip);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return trips;
     }
 }

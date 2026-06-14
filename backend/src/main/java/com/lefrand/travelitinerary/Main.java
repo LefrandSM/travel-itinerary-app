@@ -13,14 +13,22 @@ import java.time.LocalDate;
 public class Main {
     static void main() {
 
-        Trip trip = new Trip();
+//        Create
+//        Trip trip = new Trip();
+//
+//        trip.setName("amsterdam trip in sommer");
+//        trip.setCity("amsterdam, rotherdam");
+//        trip.setDateStart(Date.valueOf(LocalDate.of(2026, 9, 23)));
+//        trip.setDateEnd(Date.valueOf(LocalDate.of(2026, 9, 25)));
+//
+//        TripDao tripDao = new TripDao();
+//        tripDao.createTrip(trip);
 
-        trip.setName("amsterdam trip in sommer");
-        trip.setCity("amsterdam, rotherdam");
-        trip.setDateStart(Date.valueOf(LocalDate.of(2026, 9, 23)));
-        trip.setDateEnd(Date.valueOf(LocalDate.of(2026, 9, 25)));
-
-        TripDao tripDao = new TripDao();
-        tripDao.createTrip(trip);
+//        Read all show in terminal
+//        TripDao trips = new TripDao();
+//
+//        for(Trip t : trips.readAllTrips()) {
+//            System.out.println(t.getName());
+//        }
     }
 }
