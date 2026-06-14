@@ -15,7 +15,12 @@ public class TripHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) {
         try {
-            if(exchange.getRequestMethod().equals("GET")) {
+            // to check request
+            String method = exchange.getRequestMethod();
+            String path = exchange.getRequestURI().getPath();
+
+            // request getAllTrips
+            if(method.equals("GET") && path.equals("/trips")) {
 
                 // 1. Read from DB
                 List<Trip> trips = tripDao.readAllTrips();
