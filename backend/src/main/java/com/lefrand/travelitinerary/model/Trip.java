@@ -1,34 +1,34 @@
 package com.lefrand.travelitinerary.model;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 import java.util.List;
 
 public class Trip {
     private int id;
     private String name;
     private String city;
-    private LocalDateTime dateStart;
-    private LocalDateTime dateEnd;
+    private Date dateStart;
+    private Date dateEnd;
 
     private int userId; // trip has 1 user
     private List<Country> countries; // trip could have many countries
 
-    public Trip(int id, String name, String city, LocalDateTime dateStart, LocalDateTime dateEnd, int userId, List<Country> countries) {
+    public Trip() {
+
+    }
+
+    public Trip(int id, String name, String city, Date dateStart, Date dateEnd) {
         this.id = id;
         this.name = name;
         this.city = city;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
-        this.userId = userId;
-        this.countries = countries;
+//        this.userId = userId;
+//        this.countries = countries;
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -47,19 +47,19 @@ public class Trip {
         this.city = city;
     }
 
-    public LocalDateTime getDateStart() {
+    public Date getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(LocalDateTime dateStart) {
+    public void setDateStart(Date dateStart) {
         this.dateStart = dateStart;
     }
 
-    public LocalDateTime getDateEnd() {
+    public Date getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(LocalDateTime dateEnd) {
+    public void setDateEnd(Date dateEnd) {
         this.dateEnd = dateEnd;
     }
 
