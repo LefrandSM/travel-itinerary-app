@@ -3,6 +3,7 @@ package com.lefrand.travelitinerary.dao;
 import com.lefrand.travelitinerary.config.DatabaseConnection;
 import com.lefrand.travelitinerary.model.Trip;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class TripDao {
         return trips;
     }
     public Trip getTripById(Integer id) {
-        String sql = "SELECT FROM trip WHERE id = ?";
+        String sql = "SELECT * FROM trip WHERE id = ?";
 
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);) {
@@ -85,6 +86,23 @@ public class TripDao {
             stmt.setInt(1, id);
             stmt.executeUpdate();
             System.out.println("Trip with id = " + id + " succeed deleted");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void updateTrip(Trip trip, Integer id) {
+        String sql = "UPDATE trip SET name = ?, city = ?, date_start = ?, date_end = ? WHERE id = ?";
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, trip.getName());
+            stmt.setString(2, trip.getCity());
+            stmt.setDate(3, trip.getDateStart());
+            stmt.setDate(4, trip.getDateEnd());
+            stmt.setInt(5, id);
+            stmt.executeUpdate();
+
+            System.out.println("Update succeed");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

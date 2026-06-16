@@ -46,7 +46,17 @@ public class App {
 //        System.out.println(trip.getName());
 
 //        Delete data by id
+//        TripDao tripDao = new TripDao();
+//        tripDao.deleteTrip(3);
+
         TripDao tripDao = new TripDao();
-        tripDao.deleteTrip(3);
+        Trip trip = tripDao.getTripById(6);
+        Trip tripUpdate = new Trip();
+        tripUpdate.setName("Fligt to home");
+        tripUpdate.setCity("Payakumbuh, Bukittingi");
+        tripUpdate.setDateStart(Date.valueOf(LocalDate.of(2027, 2, 25)));
+        tripUpdate.setDateEnd(Date.valueOf(LocalDate.of(2027, 3, 20)));
+
+        tripDao.updateTrip(tripUpdate, tripUpdate.getId());
     }
 }
