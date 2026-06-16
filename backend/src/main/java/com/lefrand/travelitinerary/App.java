@@ -1,6 +1,8 @@
 package com.lefrand.travelitinerary;
 
 import com.lefrand.travelitinerary.api.TripHandler;
+import com.lefrand.travelitinerary.dao.TripDao;
+import com.lefrand.travelitinerary.model.Trip;
 import com.sun.net.httpserver.HttpServer;
 
 import java.net.InetSocketAddress;
@@ -9,6 +11,12 @@ import java.net.InetSocketAddress;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class App {
     static void main() throws Exception {
+
+        // Java server HTTP
+//        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+//        server.createContext("/trips", new TripHandler());
+//        server.start();
+//        System.out.println("Server running on http://localhost:8080");
 
 //        Create
 //        Trip trip = new Trip();
@@ -28,10 +36,12 @@ public class App {
 //            System.out.println(t.getName());
 //        }
 
-        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
-        server.createContext("/trips", new TripHandler());
-        server.start();
-        System.out.println("Server running on http://localhost:8080");
+//        Read data by id
+        TripDao tripDao = new TripDao();
+        Trip trip = tripDao.getTripById(4);
+
+        System.out.println(trip.getName());
+
 
     }
 }

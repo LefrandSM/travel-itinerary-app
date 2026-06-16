@@ -29,11 +29,15 @@ public class TripHandler implements HttpHandler {
                 String json = JsonUtil.toJson(trips);
 
                 // 3. Send response
+                // tell client that I'm gonna send JSON data
                 exchange.getResponseHeaders().add("Content-Type", "application/json");
+                // to tell HTTP status and the size of data that will be sent
                 exchange.sendResponseHeaders(200, json.getBytes().length);
-
+                // channel to write data back to client
                 OutputStream os = exchange.getResponseBody();
+                // convert JSON into bytes and be sent to client
                 os.write(json.getBytes());
+                // close response
                 os.close();
             }
         } catch (Exception e) {

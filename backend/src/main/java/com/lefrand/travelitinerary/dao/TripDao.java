@@ -56,4 +56,28 @@ public class TripDao {
 
         return trips;
     }
+    public Trip getTripById(Integer id) {
+        String sql = "SELECT * FROM trip WHERE id = ?";
+
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setInt(1, id);
+            ResultSet result = stmt.executeQuery();
+            result.next();
+
+            Trip trip = new Trip();
+
+            trip.setId(id);
+            trip.setName(result.getString("name"));
+            trip.setCity(result.getString("city"));
+            trip.setDateStart(result.getDate("date_start"));
+            trip.setDateEnd(result.getDate("date_end"));
+            trip.setUserId(result.getInt("user_id"));
+
+            return trip;
+        } catch (SQLException e) {
+            throw new RuntimeException("There is no data");
+        }
+    }
 }
