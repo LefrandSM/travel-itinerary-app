@@ -3,10 +3,7 @@ package com.lefrand.travelitinerary.dao;
 import com.lefrand.travelitinerary.config.DatabaseConnection;
 import com.lefrand.travelitinerary.model.Trip;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +21,7 @@ public class TripDao {
             stmt.setInt(5, trip.getUserId());
 
             stmt.executeUpdate();
-
+            System.out.println("Data is added");
 
         }catch (SQLException e) {
             throw new RuntimeException(e);
@@ -57,7 +54,7 @@ public class TripDao {
         return trips;
     }
     public Trip getTripById(Integer id) {
-        String sql = "SELECT * FROM trip WHERE id = ?";
+        String sql = "SELECT FROM trip WHERE id = ?";
 
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);) {
@@ -78,6 +75,18 @@ public class TripDao {
             return trip;
         } catch (SQLException e) {
             throw new RuntimeException("There is no data");
+        }
+    }
+    public void deleteTrip(Integer id) {
+        String sql = "DELETE FROM trip WHERE id = ?";
+
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            System.out.println("Trip with id = " + id + " succeed deleted");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

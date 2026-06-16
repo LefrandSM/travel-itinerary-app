@@ -6,6 +6,8 @@ import com.lefrand.travelitinerary.model.Trip;
 import com.sun.net.httpserver.HttpServer;
 
 import java.net.InetSocketAddress;
+import java.sql.Date;
+import java.time.LocalDate;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -21,10 +23,11 @@ public class App {
 //        Create
 //        Trip trip = new Trip();
 //
-//        trip.setName("amsterdam trip in sommer");
-//        trip.setCity("amsterdam, rotherdam");
+//        trip.setName("paris trip in winter");
+//        trip.setCity("Paris");
 //        trip.setDateStart(Date.valueOf(LocalDate.of(2026, 9, 23)));
 //        trip.setDateEnd(Date.valueOf(LocalDate.of(2026, 9, 25)));
+//        trip.setUserId(2);
 //
 //        TripDao tripDao = new TripDao();
 //        tripDao.createTrip(trip);
@@ -37,11 +40,13 @@ public class App {
 //        }
 
 //        Read data by id
+//        TripDao tripDao = new TripDao();
+//        Trip trip = tripDao.getTripById(4);
+//
+//        System.out.println(trip.getName());
+
+//        Delete data by id
         TripDao tripDao = new TripDao();
-        Trip trip = tripDao.getTripById(4);
-
-        System.out.println(trip.getName());
-
-
+        tripDao.deleteTrip(3);
     }
 }
