@@ -40,6 +40,17 @@ public class TripHandler implements HttpHandler {
                 // close response
                 os.close();
             }
+            if(path.startsWith("/trips/")) {
+                String[] parts = path.split("/");
+                int id = Integer.parseInt(parts[2]);
+                List<Trip> trip = tripDao.getTripById(id);
+                String json = JsonUtil.toJson(trip);
+                exchange.getResponseHeaders().add("Content-type", "application/json");
+                exchange.sendResponseHeaders(200, json.getBytes().length);
+                OutputStream os = exchange.getResponseBody();
+                os.write(json.getBytes());
+                os.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

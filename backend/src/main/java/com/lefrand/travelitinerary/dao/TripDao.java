@@ -35,18 +35,9 @@ public class TripDao {
 
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) {
-            while(rs.next()) {
-                Trip trip = new Trip();
-
-                trip.setId(rs.getInt("id"));
-                trip.setName(rs.getString("name"));
-                trip.setCity(rs.getString("city"));
-                trip.setDateStart(rs.getDate("date_start"));
-                trip.setDateEnd(rs.getDate("date_end"));
-                trip.setUserId(rs.getInt("user_id"));
-
-                trips.add(trip);
+            ResultSet resultSet = stmt.executeQuery()) {
+            while(resultSet.next()) {
+                trips.add(mapTrip(resultSet));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -54,26 +45,20 @@ public class TripDao {
 
         return trips;
     }
-    public Trip getTripById(Integer id) {
+    public List<Trip> getTripById(Integer id) {
+        List<Trip> trips = new ArrayList<>();
         String sql = "SELECT * FROM trip WHERE id = ?";
 
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);) {
 
             stmt.setInt(1, id);
-            ResultSet result = stmt.executeQuery();
-            result.next();
+            ResultSet resultSet = stmt.executeQuery();
+            while(resultSet.next()) {
+                trips.add(mapTrip(resultSet));
+            }
 
-            Trip trip = new Trip();
-
-            trip.setId(id);
-            trip.setName(result.getString("name"));
-            trip.setCity(result.getString("city"));
-            trip.setDateStart(result.getDate("date_start"));
-            trip.setDateEnd(result.getDate("date_end"));
-            trip.setUserId(result.getInt("user_id"));
-
-            return trip;
+            return trips;
         } catch (SQLException e) {
             throw new RuntimeException("There is no data");
         }
@@ -106,5 +91,18 @@ public class TripDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    private Trip mapTrip(ResultSet resultSet) throws SQLException {
+
+        Trip trip = new Trip();
+
+        trip.setId(resultSet.getInt("id"));
+        trip.setName(resultSet.getString("name"));
+        trip.setCity(resultSet.getString("city"));
+        trip.setDateStart(resultSet.getDate("date_start"));
+        trip.setDateEnd(resultSet.getDate("date_end"));
+        trip.setUserId(resultSet.getInt("user_id"));
+
+        return trip;
     }
 }

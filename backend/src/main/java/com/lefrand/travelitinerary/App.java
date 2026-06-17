@@ -14,11 +14,11 @@ import java.time.LocalDate;
 public class App {
     static void main() throws Exception {
 
-        // Java server HTTP
-//        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
-//        server.createContext("/trips", new TripHandler());
-//        server.start();
-//        System.out.println("Server running on http://localhost:8080");
+//         Java server HTTP
+        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+        server.createContext("/trips", new TripHandler());
+        server.start();
+        System.out.println("Server running on http://localhost:8080");
 
 //        Create
 //        Trip trip = new Trip();
@@ -49,14 +49,14 @@ public class App {
 //        TripDao tripDao = new TripDao();
 //        tripDao.deleteTrip(3);
 
-        TripDao tripDao = new TripDao();
-        Trip trip = tripDao.getTripById(6);
-        Trip tripUpdate = new Trip();
-        tripUpdate.setName("Fligt to home");
-        tripUpdate.setCity("Payakumbuh, Bukittingi");
-        tripUpdate.setDateStart(Date.valueOf(LocalDate.of(2027, 2, 25)));
-        tripUpdate.setDateEnd(Date.valueOf(LocalDate.of(2027, 3, 20)));
-
-        tripDao.updateTrip(tripUpdate, tripUpdate.getId());
+//        TripDao tripDao = new TripDao();
+//        Trip trip = tripDao.getTripById(6);
+//        Trip tripUpdate = new Trip();
+//        tripUpdate.setName("Fligt to home");
+//        tripUpdate.setCity("Payakumbuh, Bukittingi");
+//        tripUpdate.setDateStart(Date.valueOf(LocalDate.of(2027, 2, 25)));
+//        tripUpdate.setDateEnd(Date.valueOf(LocalDate.of(2027, 3, 20)));
+//
+//        tripDao.updateTrip(tripUpdate, tripUpdate.getId());
     }
 }
