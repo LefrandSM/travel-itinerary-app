@@ -40,7 +40,7 @@ public class TripHandler implements HttpHandler {
                 // close response
                 os.close();
             }
-            if(path.startsWith("/trips/")) {
+            if(method.equals("GET") && path.startsWith("/trips/")) {
                 String[] parts = path.split("/");
                 int id = Integer.parseInt(parts[2]);
                 List<Trip> trip = tripDao.getTripById(id);
@@ -50,6 +50,13 @@ public class TripHandler implements HttpHandler {
                 OutputStream os = exchange.getResponseBody();
                 os.write(json.getBytes());
                 os.close();
+            }
+            if(method.equals("DELETE") && path.startsWith("/trips/")) {
+                String[] parts = path.split("/");
+                int id = Integer.parseInt(parts[2]);
+                tripDao.deleteTrip(id);
+                exchange.getResponseHeaders().add("Content-type", "application/json");
+                exchange.sendResponseHeaders(204, -1);
             }
         } catch (Exception e) {
             e.printStackTrace();
