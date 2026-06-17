@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3946861-0aa4-44bc-b76c-bb847c9252f8" name="Changes" comment="feat: add User," />
+    <list default="true" id="f3946861-0aa4-44bc-b76c-bb847c9252f8" name="Changes" comment="feat: add User,">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/api/TripHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/api/TripHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/dao/TripDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/dao/TripDao.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

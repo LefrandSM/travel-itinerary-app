@@ -44,19 +44,39 @@ public class TripHandler implements HttpHandler {
                 String[] parts = path.split("/");
                 int id = Integer.parseInt(parts[2]);
                 List<Trip> trip = tripDao.getTripById(id);
-                String json = JsonUtil.toJson(trip);
-                exchange.getResponseHeaders().add("Content-type", "application/json");
-                exchange.sendResponseHeaders(200, json.getBytes().length);
-                OutputStream os = exchange.getResponseBody();
-                os.write(json.getBytes());
-                os.close();
+                if (!trip.isEmpty()) {
+                    String json = JsonUtil.toJson(trip);
+                    exchange.getResponseHeaders().add("Content-type", "application/json");
+                    exchange.sendResponseHeaders(200, json.getBytes().length);
+                    OutputStream os = exchange.getResponseBody();
+                    os.write(json.getBytes());
+                    os.close();
+                } else {
+                    String json = "{\"error\":\"Trip not found\"}";
+                    exchange.getResponseHeaders().add("Content-type", "application/json");
+                    exchange.sendResponseHeaders(404, json.getBytes().length);
+
+                    OutputStream os = exchange.getResponseBody();
+                    os.write(json.getBytes());
+                    os.close();
+                }
+
             }
             if(method.equals("DELETE") && path.startsWith("/trips/")) {
                 String[] parts = path.split("/");
                 int id = Integer.parseInt(parts[2]);
-                tripDao.deleteTrip(id);
-                exchange.getResponseHeaders().add("Content-type", "application/json");
-                exchange.sendResponseHeaders(204, -1);
+                boolean deleted = tripDao.deleteTrip(id);
+                if(deleted) {
+                    exchange.sendResponseHeaders(204, -1);
+                } else {
+                    String json = "{\"error\":\"Trip not found\"}";
+                    exchange.getResponseHeaders().add("Content-type", "application/json");
+                    exchange.sendResponseHeaders(404, json.getBytes().length);
+
+                    OutputStream os = exchange.getResponseBody();
+                    os.write(json.getBytes());
+                    os.close();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

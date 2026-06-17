@@ -63,14 +63,14 @@ public class TripDao {
             throw new RuntimeException("There is no data");
         }
     }
-    public void deleteTrip(Integer id) {
+    public boolean deleteTrip(Integer id) {
         String sql = "DELETE FROM trip WHERE id = ?";
 
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
-            stmt.executeUpdate();
-            System.out.println("Trip with id = " + id + " succeed deleted");
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
