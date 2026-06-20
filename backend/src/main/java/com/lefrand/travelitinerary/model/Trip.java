@@ -1,14 +1,15 @@
 package com.lefrand.travelitinerary.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Trip {
     private int id;
     private String name;
     private String city;
-    private Date dateStart;
-    private Date dateEnd;
+    private LocalDate dateStart;
+    private LocalDate dateEnd;
 
     private int userId; // trip has 1 user
     private List<Country> countries; // trip could have many countries
@@ -17,7 +18,7 @@ public class Trip {
 
     }
 
-    public Trip(int id, String name, String city, Date dateStart, Date dateEnd) {
+    public Trip(int id, String name, String city, LocalDate dateStart, LocalDate dateEnd) {
         this.id = id;
         this.name = name;
         this.city = city;
@@ -48,19 +49,19 @@ public class Trip {
         this.city = city;
     }
 
-    public Date getDateStart() {
+    public LocalDate getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(Date dateStart) {
+    public void setDateStart(LocalDate dateStart) {
         this.dateStart = dateStart;
     }
 
-    public Date getDateEnd() {
+    public LocalDate getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Date dateEnd) {
+    public void setDateEnd(LocalDate dateEnd) {
         this.dateEnd = dateEnd;
     }
 

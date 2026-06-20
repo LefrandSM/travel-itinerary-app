@@ -1,5 +1,6 @@
 package com.lefrand.travelitinerary.api;
 
+import com.google.gson.Gson;
 import com.lefrand.travelitinerary.dao.TripDao;
 import com.lefrand.travelitinerary.model.Trip;
 import com.lefrand.travelitinerary.util.JsonUtil;
@@ -19,7 +20,7 @@ public class TripHandler implements HttpHandler {
             String method = exchange.getRequestMethod();
             String path = exchange.getRequestURI().getPath();
 
-            // request getAllTrips
+            // GET all trips
             if(method.equals("GET") && path.equals("/trips")) {
 
                 // 1. Read from DB
@@ -40,6 +41,8 @@ public class TripHandler implements HttpHandler {
                 // close response
                 os.close();
             }
+
+            // GET trip by id
             if(method.equals("GET") && path.startsWith("/trips/")) {
                 String[] parts = path.split("/");
                 int id = Integer.parseInt(parts[2]);
@@ -62,11 +65,37 @@ public class TripHandler implements HttpHandler {
                 }
 
             }
+
+            // DELETE trip
             if(method.equals("DELETE") && path.startsWith("/trips/")) {
                 String[] parts = path.split("/");
                 int id = Integer.parseInt(parts[2]);
                 boolean deleted = tripDao.deleteTrip(id);
                 if(deleted) {
+                    exchange.sendResponseHeaders(204, -1);
+                } else {
+                    String json = "{\"error\":\"Trip not found\"}";
+                    exchange.getResponseHeaders().add("Content-type", "application/json");
+                    exchange.sendResponseHeaders(404, json.getBytes().length);
+
+                    OutputStream os = exchange.getResponseBody();
+                    os.write(json.getBytes());
+                    os.close();
+                }
+            }
+
+            // UPDATE trip
+            if(method.equals("PATCH") && path.startsWith("/trips/")) {
+                String[] parts = path.split("/");
+                int id = Integer.parseInt(parts[2]);
+
+                String jsonUpdate = new String(exchange.getRequestBody().readAllBytes());
+
+                Trip trip = JsonUtil.fromJson(jsonUpdate, Trip.class);
+
+                boolean statusUpdate = tripDao.updateTrip(trip ,id);
+
+                if(statusUpdate) {
                     exchange.sendResponseHeaders(204, -1);
                 } else {
                     String json = "{\"error\":\"Trip not found\"}";

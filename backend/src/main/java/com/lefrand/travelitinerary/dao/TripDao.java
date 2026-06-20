@@ -17,8 +17,8 @@ public class TripDao {
 
             stmt.setString(1, trip.getName());
             stmt.setString(2, trip.getCity());
-            stmt.setDate(3, trip.getDateStart());
-            stmt.setDate(4, trip.getDateEnd());
+            stmt.setDate(3, java.sql.Date.valueOf(trip.getDateStart()));
+            stmt.setDate(4, java.sql.Date.valueOf(trip.getDateEnd()));
             stmt.setInt(5, trip.getUserId());
 
             stmt.executeUpdate();
@@ -75,19 +75,19 @@ public class TripDao {
             throw new RuntimeException(e);
         }
     }
-    public void updateTrip(Trip trip, Integer id) {
+    public boolean updateTrip(Trip trip, Integer id) {
         String sql = "UPDATE trip SET name = ?, city = ?, date_start = ?, date_end = ? WHERE id = ?";
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, trip.getName());
             stmt.setString(2, trip.getCity());
-            stmt.setDate(3, trip.getDateStart());
-            stmt.setDate(4, trip.getDateEnd());
+            stmt.setDate(3, java.sql.Date.valueOf(trip.getDateStart()));
+            stmt.setDate(4, java.sql.Date.valueOf(trip.getDateEnd()));
             stmt.setInt(5, id);
             stmt.executeUpdate();
 
-            System.out.println("Update succeed");
+            return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -99,8 +99,8 @@ public class TripDao {
         trip.setId(resultSet.getInt("id"));
         trip.setName(resultSet.getString("name"));
         trip.setCity(resultSet.getString("city"));
-        trip.setDateStart(resultSet.getDate("date_start"));
-        trip.setDateEnd(resultSet.getDate("date_end"));
+        trip.setDateStart(resultSet.getDate("date_start").toLocalDate());
+        trip.setDateEnd(resultSet.getDate("date_end").toLocalDate());
         trip.setUserId(resultSet.getInt("user_id"));
 
         return trip;
