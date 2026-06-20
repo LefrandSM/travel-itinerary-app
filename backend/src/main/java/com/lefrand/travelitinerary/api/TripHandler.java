@@ -66,6 +66,26 @@ public class TripHandler implements HttpHandler {
 
             }
 
+            // POST trip
+            if(method.equals("POST") && path.equals("/trips")) {
+                String jsonPost = new String(exchange.getRequestBody().readAllBytes());
+
+                Trip trip = JsonUtil.fromJson(jsonPost, Trip.class);
+
+                boolean status = tripDao.createTrip(trip);
+                if(status) {
+                    exchange.sendResponseHeaders(204, -1);
+                } else {
+                    String json = "{\"error\":\"Trip not found\"}";
+                    exchange.getResponseHeaders().add("Content-type", "application/json");
+                    exchange.sendResponseHeaders(404, json.getBytes().length);
+
+                    OutputStream os = exchange.getResponseBody();
+                    os.write(json.getBytes());
+                    os.close();
+                }
+            }
+
             // DELETE trip
             if(method.equals("DELETE") && path.startsWith("/trips/")) {
                 String[] parts = path.split("/");
@@ -93,9 +113,9 @@ public class TripHandler implements HttpHandler {
 
                 Trip trip = JsonUtil.fromJson(jsonUpdate, Trip.class);
 
-                boolean statusUpdate = tripDao.updateTrip(trip ,id);
+                boolean status = tripDao.updateTrip(trip ,id);
 
-                if(statusUpdate) {
+                if(status) {
                     exchange.sendResponseHeaders(204, -1);
                 } else {
                     String json = "{\"error\":\"Trip not found\"}";

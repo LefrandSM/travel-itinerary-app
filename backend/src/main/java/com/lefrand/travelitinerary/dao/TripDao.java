@@ -3,13 +3,12 @@ package com.lefrand.travelitinerary.dao;
 import com.lefrand.travelitinerary.config.DatabaseConnection;
 import com.lefrand.travelitinerary.model.Trip;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TripDao {
-    public void createTrip(Trip trip) {
+    public boolean createTrip(Trip trip) {
         String sql = "INSERT INTO trip (name, city, date_start, date_end, user_id) VALUES (?,?,?,?,?)";
 
         try(Connection conn = DatabaseConnection.getConnection();
@@ -21,8 +20,9 @@ public class TripDao {
             stmt.setDate(4, java.sql.Date.valueOf(trip.getDateEnd()));
             stmt.setInt(5, trip.getUserId());
 
-            stmt.executeUpdate();
-            System.out.println("Data is added");
+            int rowsAffected = stmt.executeUpdate();
+
+            return rowsAffected > 0;
 
         }catch (SQLException e) {
             throw new RuntimeException(e);
@@ -85,9 +85,9 @@ public class TripDao {
             stmt.setDate(3, java.sql.Date.valueOf(trip.getDateStart()));
             stmt.setDate(4, java.sql.Date.valueOf(trip.getDateEnd()));
             stmt.setInt(5, id);
-            stmt.executeUpdate();
+            int rowsAffected = stmt.executeUpdate();
 
-            return true;
+            return rowsAffected > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

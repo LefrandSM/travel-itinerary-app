@@ -8,8 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/api/TripHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/api/TripHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/dao/TripDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/dao/TripDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/model/Trip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/model/Trip.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/util/JsonUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lefrand/travelitinerary/util/JsonUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
