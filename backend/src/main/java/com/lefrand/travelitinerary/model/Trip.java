@@ -18,14 +18,14 @@ public class Trip {
 
     }
 
-    public Trip(int id, String name, String city, LocalDate dateStart, LocalDate dateEnd) {
+    public Trip(int id, String name, String city, LocalDate dateStart, LocalDate dateEnd, List<Country> countries) {
         this.id = id;
         this.name = name;
         this.city = city;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
 //        this.userId = userId;
-//        this.countries = countries;
+        this.countries = countries;
     }
 
     public int getId() {
