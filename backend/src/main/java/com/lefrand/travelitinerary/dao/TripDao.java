@@ -89,18 +89,53 @@ public class TripDao {
     }
     public List<Trip> getTripById(Integer id) {
         List<Trip> trips = new ArrayList<>();
-        String sql = "SELECT * FROM trip WHERE id = ?";
-
+        String sql = """
+            SELECT
+                t.id AS trip_id,
+                t.name,
+                t.city,
+                t.date_start,
+                t.date_end,
+                t.user_id,
+                c.id AS country_id,
+                c.name as country_name
+            FROM trip t
+            LEFT JOIN trip_country tc ON t.id = tc.trip_id
+            LEFT JOIN country c ON c.id = tc.country_id
+            WHERE t.id = ?
+        """;
+        Map<Integer, Trip> tripMap = new HashMap<>();
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);) {
 
             stmt.setInt(1, id);
             ResultSet resultSet = stmt.executeQuery();
             while(resultSet.next()) {
-                trips.add(mapTrip(resultSet));
-            }
+                int tripId = resultSet.getInt("trip_id");
+                Trip trip = tripMap.get(tripId);
+                if(trip == null) {
+                    trip = new Trip();
 
-            return trips;
+                    trip.setId(resultSet.getInt("trip_id"));
+                    trip.setName(resultSet.getString("name"));
+                    trip.setCity(resultSet.getString("city"));
+                    trip.setDateStart(resultSet.getDate("date_start").toLocalDate());
+                    trip.setDateEnd(resultSet.getDate("date_end").toLocalDate());
+                    trip.setUserId(resultSet.getInt("user_id"));
+                    trip.setCountries(new ArrayList<>());
+
+                    tripMap.put(tripId, trip);
+                }
+                int countryId = resultSet.getInt("country_id");
+                if(countryId != 0) {
+                    Country country = new Country();
+                    country.setId(resultSet.getInt("country_id"));
+                    country.setName(resultSet.getString("country_name"));
+
+                    trip.getCountries().add(country);
+                }
+            }
+            return new ArrayList<>(tripMap.values());
         } catch (SQLException e) {
             throw new RuntimeException("There is no data");
         }
