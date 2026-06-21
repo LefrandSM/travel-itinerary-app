@@ -13,6 +13,7 @@ public class Trip {
 
     private int userId; // trip has 1 user
     private List<Country> countries; // trip could have many countries
+    private List<Integer> countryIds;
 
     public Trip() {
 
@@ -80,4 +81,8 @@ public class Trip {
     public void setCountries(List<Country> countries) {
         this.countries = countries;
     }
+
+    public List<Integer> getCountryIds() { return countryIds; }
+
+    public void setCountryIds(List<Integer> countryIds) { this.countryIds = countryIds; }
 }

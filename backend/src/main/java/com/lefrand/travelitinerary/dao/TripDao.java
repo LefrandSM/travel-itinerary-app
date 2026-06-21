@@ -12,23 +12,58 @@ import java.util.Map;
 
 public class TripDao {
     public boolean createTrip(Trip trip) {
-        String sql = "INSERT INTO trip (name, city, date_start, date_end, user_id) VALUES (?,?,?,?,?)";
+        String insertTripSql = "INSERT INTO trip (name, city, date_start, date_end, user_id) VALUES (?,?,?,?,?)";
+
+        String insertCountrySql = """
+                INSERT INTO trip_country (trip_id, country_id) VALUES (?, ?)
+                """;
 
         try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            PreparedStatement stmtTrip = conn.prepareStatement(insertTripSql, Statement.RETURN_GENERATED_KEYS // to take the new id that was generated in trip table and insert it into trip_country table
+            )) {
 
-            stmt.setString(1, trip.getName());
-            stmt.setString(2, trip.getCity());
-            stmt.setDate(3, java.sql.Date.valueOf(trip.getDateStart()));
-            stmt.setDate(4, java.sql.Date.valueOf(trip.getDateEnd()));
-            stmt.setInt(5, trip.getUserId());
+            // don't save changes to the database immediately
+            conn.setAutoCommit(false);
 
-            int rowsAffected = stmt.executeUpdate();
+            stmtTrip.setString(1, trip.getName());
+            stmtTrip.setString(2, trip.getCity());
+            stmtTrip.setDate(3, java.sql.Date.valueOf(trip.getDateStart()));
+            stmtTrip.setDate(4, java.sql.Date.valueOf(trip.getDateEnd()));
+            stmtTrip.setInt(5, trip.getUserId());
 
-            return rowsAffected > 0;
+            // execute Trip Insert Query
+            int rowsAffectedTrip = stmtTrip.executeUpdate();
+
+            // take id that was generated from trip table
+            ResultSet resultSet = stmtTrip.getGeneratedKeys();
+
+            int tripId = 0;
+            if(resultSet.next()) {
+                tripId = resultSet.getInt(1);
+            }
+
+            // insert countries (join table trip_country)
+            PreparedStatement stmtCountry = conn.prepareStatement(insertCountrySql);
+
+            if(trip.getCountryIds() != null) {
+                for (Integer countryId : trip.getCountryIds()) {
+                    stmtCountry.setInt(1, tripId);
+                    stmtCountry.setInt(2, countryId);
+                    // store this SQL in a batch queue
+                    stmtCountry.addBatch();
+                }
+
+                // execute batch (all query)
+                int[] rowsAffectedTripCountry = stmtCountry.executeBatch();
+            }
+
+            // save everything in DATABASE
+            conn.commit();
+
+            return rowsAffectedTrip > 0;
 
         }catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to create Trip", e);
         }
     }
     public List<Trip> readAllTrips() {
